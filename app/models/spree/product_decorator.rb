@@ -1,7 +1,7 @@
 Spree::Product.class_eval do
-  has_many :nonuniq_variant_images, -> { order(:position) }, source: :variant_image_images, through: :variants_including_master
-
   def variant_images
-    nonuniq_variant_images.distinct
+    Spree::Image
+      .joins(:variant_images).references(:variant_images)
+      .where(spree_assets_variants: { variant_id: variant_ids})
   end
 end
