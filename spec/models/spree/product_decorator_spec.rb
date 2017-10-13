@@ -10,12 +10,13 @@ describe Spree::Product do
     variant.images << image_green
     variant.images << image_blue
     variant.save
+    product.reload
   end
 
   describe '#variant_images' do
     it 'returns unique list of variant images' do
-      expect(product.reload.variant_images.size).to eq(2)
-      expect(product.reload.variant_images).to include(image_blue, image_green)
+      expect(product.variant_images.size).to eq(2)
+      expect(product.variant_images).to include(image_blue, image_green)
     end
   end
 
