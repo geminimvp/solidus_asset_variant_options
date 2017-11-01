@@ -9,6 +9,5 @@ module Spree
 
     # on create only just in case there are some lingering in the system
     validates_uniqueness_of :image_id, scope: :variant_id, on: :create
-    validates_presence_of :image_id, :variant_id
   end
 end
