@@ -1,6 +1,8 @@
 Spree::Variant.class_eval do
   has_many :variant_images, class_name: '::Spree::VariantImage', dependent: :destroy
-  has_many :variant_image_images, through: :variant_images, source: :image
+  has_many :variant_image_images,
+           -> { includes(:variant_images).references(:variant_images).order('spree_assets_variants.position ASC')},
+           through: :variant_images, source: :image
 
   has_many :display_variant_images, -> (object) {
     master = object.product.master
