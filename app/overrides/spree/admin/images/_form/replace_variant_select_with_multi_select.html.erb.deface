@@ -1,5 +1,5 @@
 <!-- replace 'erb[loud]:contains("f.select :viewable_id")' -->
-<%= f.hidden_field :viewable_id, value: 1 %>
+<%= f.hidden_field :viewable_id, value: @variants.first.try(:id) %>
 <%= f.select :viewable_ids, options_for_select(@variants, f.object.variant_ids), {}, {multiple: true, :class => 'fullwidth'} %>
 
 <%# Keeping this script tag in the view for now.  %>
