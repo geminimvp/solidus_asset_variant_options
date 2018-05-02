@@ -24,6 +24,6 @@ Spree::Admin::ImagesController.class_eval do
         params[:image][:viewable_ids] = [params[:image][:viewable_id]]
       end
 
-      params[:image][:viewable_ids].reject(&:blank?)
+      params[:image][:viewable_ids] = Array(params[:image][:viewable_ids]).reject(&:blank?)
     end
 end
