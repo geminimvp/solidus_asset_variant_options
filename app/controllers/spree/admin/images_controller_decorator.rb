@@ -10,7 +10,7 @@ Spree::Admin::ImagesController.class_eval do
     end
 
     def set_variants
-      @image.validate_variant_presence = true
+      @image.validate_variant_presence = false
       @image.variant_ids = viewable_ids
     end
 
