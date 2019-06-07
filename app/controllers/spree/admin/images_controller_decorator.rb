@@ -6,7 +6,7 @@ Spree::Admin::ImagesController.class_eval do
   private
 
     def set_default_variants
-      @image.variant_ids = [@product.id]
+      @image.variant_ids = [@product.master.id]
     end
 
     def set_variants
@@ -25,5 +25,10 @@ Spree::Admin::ImagesController.class_eval do
       end
 
       params[:image][:viewable_ids] = Array(params[:image][:viewable_ids]).reject(&:blank?)
+
+      # fallback to the master variant
+      unless params[:image][:viewable_ids].present?
+        params[:image][:viewable_ids] = [@product.master.id]
+      end
     end
 end
