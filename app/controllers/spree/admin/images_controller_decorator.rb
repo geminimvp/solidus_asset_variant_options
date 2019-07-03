@@ -20,15 +20,21 @@ Spree::Admin::ImagesController.class_eval do
       # This allows the existing drag / drop image upload form to continue to
       # function with no additional modifications
       #
-      if params[:image][:viewable_ids].nil? && params[:image][:viewable_id].present?
-        params[:image][:viewable_ids] = [params[:image][:viewable_id]]
-      end
+      viewable_ids = if params[:image][:viewable_ids].present?
+                       params[:image][:viewable_ids]
+                     elsif params[:image][:viewable_id].present?
+                       [params[:image][:viewable_id]]
+                     end
 
-      params[:image][:viewable_ids] = Array(params[:image][:viewable_ids]).reject(&:blank?)
+      # Drop nil / empty string values
+      viewable_ids = Array(viewable_ids).reject(&:blank?)
 
       # fallback to the master variant
-      unless params[:image][:viewable_ids].present?
-        params[:image][:viewable_ids] = [@product.master.id]
+      unless viewable_ids.present?
+        viewable_ids = [@product.master.id]
       end
+
+      # return value to ensure assignment inside set_variants
+      viewable_ids
     end
 end
