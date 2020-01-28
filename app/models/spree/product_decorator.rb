@@ -6,6 +6,6 @@ Spree::Product.class_eval do
   end
 
   def display_image
-    gallery.images.first
+    gallery.images.first || Spree::Image.new
   end
 end
